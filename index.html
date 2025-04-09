@@ -13,20 +13,24 @@
             box-sizing: border-box;
         }
 
-        /* :root[data-theme="light"] {
-            --text: #1a171c;
-            --background: #f1ecf3;
-            --primary: #4b2d5c;
-            --secondary: #b685d1;
-            --accent: #8431b4;
-        } */
-
         :root {
             --text: #e7e4e9;
             --background: #110c13;
             --primary: #c1a4d2;
             --secondary: #5f2e7a;
             --accent: #9e4acd;
+
+            /* --text: #1a171c;
+            --background: #f1ecf3;
+            --primary: #4b2d5c;
+            --secondary: #b685d1;
+            --accent: #8431b4; */
+
+            /* --text: #090f15;
+            --background: #f2f6fa;
+            --primary: #4d81b4;
+            --secondary: #d295cc;
+            --accent: #c77a95; */
         }
 
         body {
@@ -41,7 +45,38 @@
             font-size: 2rem;
             padding-bottom: 10px;
             color: var(--primary);
-            border-bottom-style: dashed;
+            border-bottom: 5px dashed var(--secondary);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        [theme-picker] {
+            &>span {
+                display: inline-block;
+
+                width: 1ch;
+                transition: 0.3s;
+                aspect-ratio: 1 / 1;
+                border-radius: 50%;
+            }
+
+            & [prev-primary] {
+                background-color: var(--primary);
+            }
+
+            & [prev-secondary] {
+                background-color: var(--secondary);
+            }
+
+            & [prev-accent] {
+                background-color: var(--accent);
+            }
+
+            & [prev-text] {
+                background-color: var(--text);
+            }
         }
 
         /* hide the default radio indicator*/
@@ -54,7 +89,8 @@
         }
 
         /* associate the label for the radio button clickable */
-        label:has(>input[type="radio"]) {
+        label:has(>input[type="radio"]),
+        label:has(input[type="checkbox"]) {
             cursor: pointer;
         }
 
@@ -67,13 +103,14 @@
             display: inline-flex;
 
             & label {
-                color: var(--secondary);
-                transition: color 0.3s;
+                opacity: 0.6;
+                color: var(--primary);
+                transition: opacity 0.3s;
             }
 
             & label:hover,
             & label:has(>input:checked) {
-                color: var(--primary);
+                opacity: 1;
             }
 
             & [nav-indicator] {
@@ -122,7 +159,7 @@
                 transition: 0.3s;
 
                 &:hover {
-                    color: var(--text);
+                    opacity: 0.9;
                     transform: scale(1.1) translateY(5px);
                 }
             }
@@ -151,19 +188,15 @@
 
             & [done-btn] {
                 font-size: 1.2rem;
-
-                opacity: 0.5;
-
-                transition: 0.3s;
                 color: transparent;
 
                 &:hover {
                     color: var(--secondary);
                 }
 
-                &:active,
-                &:has(>input:checked) {
+                &:active {
                     color: var(--primary);
+                    transform: scale(1.5);
                 }
 
                 &::before {
@@ -177,8 +210,8 @@
                 }
             }
 
-            &:hover [done-btn] {
-                opacity: 1;
+            & [done-btn]:has(>input:checked) {
+                color: var(--secondary);
             }
 
             & input[type="text"] {
@@ -189,14 +222,20 @@
 
                 padding: 1px 1ch;
                 font-size: 1.2rem;
-                border-left: 0.15em solid var(--secondary);
+
+                opacity: 0.6;
+                border-left: 0.15em solid var(--accent);
 
                 transition: 0.3s;
 
                 &:focus {
                     outline: none;
-                    border-left-color: var(--accent);
+                    opacity: 1;
                 }
+            }
+
+            &:hover input[type="text"] {
+                opacity: 1;
             }
         }
 
@@ -211,7 +250,14 @@
 </head>
 
 <body>
-    <h1>Pure CSS ToDo App</h1>
+    <h1>Pure CSS ToDo App
+        <div theme-picker>
+            <span prev-primary></span>
+            <span prev-secondary></span>
+            <span prev-accent></span>
+            <span prev-text></span>
+        </div>
+    </h1>
     <nav>
         <label nav-todo>
             <input type="radio" name="tab-switcher" checked="checked">Todo
