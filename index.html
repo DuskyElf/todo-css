@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo CSS</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* :root[data-theme="light"] {
+            --text: #1a171c;
+            --background: #f1ecf3;
+            --primary: #4b2d5c;
+            --secondary: #b685d1;
+            --accent: #8431b4;
+        } */
+
+        :root {
+            --text: #e7e4e9;
+            --background: #110c13;
+            --primary: #c1a4d2;
+            --secondary: #5f2e7a;
+            --accent: #9e4acd;
+        }
+
+        body {
+            padding: 20px;
+            height: 100vh;
+            color: var(--text);
+            font-family: Arial, sans-serif;
+            background-color: var(--background);
+        }
+
+        h1 {
+            font-size: 2rem;
+            padding-bottom: 10px;
+            color: var(--primary);
+            border-bottom-style: dashed;
+        }
+
+        /* hide the default radio indicator*/
+        input[type="radio"],
+        input[type="checkbox"] {
+            width: 0;
+            opacity: 0;
+            cursor: pointer;
+            position: absolute;
+        }
+
+        /* associate the label for the radio button clickable */
+        label:has(>input[type="radio"]) {
+            cursor: pointer;
+        }
+
+        nav {
+            margin: 20px;
+            font-size: 1.5rem;
+            position: relative;
+
+            gap: 50px;
+            display: inline-flex;
+
+            & label {
+                color: var(--secondary);
+                transition: color 0.3s;
+            }
+
+            & label:hover,
+            & label:has(>input:checked) {
+                color: var(--primary);
+            }
+
+            & [nav-indicator] {
+                color: var(--accent);
+                position: absolute;
+                pointer-events: none;
+
+                transition: 0.3s;
+
+                display: inline-flex;
+                align-items: center;
+                justify-content: space-between;
+
+                &::before {
+                    content: "[";
+                }
+
+                &::after {
+                    content: "]";
+                }
+            }
+
+            &:has(label[nav-todo]>input:checked) [nav-indicator] {
+                left: -1ch;
+                width: 5.7ch;
+            }
+
+            &:has(label[nav-done]>input:checked) [nav-indicator] {
+                left: calc(100% - 5.1ch);
+                width: 6.1ch;
+            }
+        }
+
+        main {
+            padding: 0 2.3ch;
+
+            & [add-btn] {
+                padding: 5px;
+                border-radius: 5px;
+                position: absolute;
+                transform: translateY(5px);
+
+                color: var(--background);
+                background-color: var(--primary);
+
+                transition: 0.3s;
+
+                &:hover {
+                    color: var(--text);
+                    transform: scale(1.1) translateY(5px);
+                }
+            }
+
+            & [add-btn]:has(>input:checked) {
+                display: none;
+            }
+
+            & [add-btn]:not(:has(>input:checked))~[add-btn] {
+                display: none;
+            }
+
+            & [add-btn]:has(>input:not(:checked))+.todo-data {
+                display: none;
+            }
+        }
+
+        body:has(label[nav-done]>input:checked) [add-btn] {
+            display: none;
+        }
+
+        .todo-data {
+            display: flex;
+            align-self: center;
+            gap: 1ch;
+
+            & [done-btn] {
+                font-size: 1.2rem;
+
+                opacity: 0.5;
+
+                transition: 0.3s;
+                color: transparent;
+
+                &:hover {
+                    color: var(--secondary);
+                }
+
+                &:active,
+                &:has(>input:checked) {
+                    color: var(--primary);
+                }
+
+                &::before {
+                    content: "[";
+                    color: var(--accent);
+                }
+
+                &::after {
+                    content: "]";
+                    color: var(--accent);
+                }
+            }
+
+            &:hover [done-btn] {
+                opacity: 1;
+            }
+
+            & input[type="text"] {
+                flex-grow: 1;
+                border: none;
+                color: inherit;
+                background-color: transparent;
+
+                padding: 1px 1ch;
+                font-size: 1.2rem;
+                border-left: 0.15em solid var(--secondary);
+
+                transition: 0.3s;
+
+                &:focus {
+                    outline: none;
+                    border-left-color: var(--accent);
+                }
+            }
+        }
+
+        body:has(label[nav-todo]>input:checked) .todo-data:has(label[done-btn]>input:checked) {
+            display: none;
+        }
+
+        body:has(label[nav-done]>input:checked) .todo-data:not(:has(label[done-btn]>input:checked)) {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Pure CSS ToDo App</h1>
+    <nav>
+        <label nav-todo>
+            <input type="radio" name="tab-switcher" checked="checked">Todo
+        </label>
+        <label nav-done>
+            <input type="radio" name="tab-switcher">Done
+        </label>
+        <span nav-indicator></span>
+    </nav>
+
+    <main todo-database>
+        <label add-btn>+<input type="radio"></label>
+        <div class="todo-data">
+            <label done-btn>✓<input type="checkbox"></label>
+            <input type="text">
+        </div>
+        <label add-btn>+<input type="radio"></label>
+        <div class="todo-data">
+            <label done-btn>✓<input type="checkbox"></label>
+            <input type="text">
+        </div>
+        <label add-btn>+<input type="radio"></label>
+        <div class="todo-data">
+            <label done-btn>✓<input type="checkbox"></label>
+            <input type="text">
+        </div>
+        <label add-btn>+<input type="radio"></label>
+        <div class="todo-data">
+            <label done-btn>✓<input type="checkbox"></label>
+            <input type="text">
+        </div>
+        <label add-btn>+<input type="radio"></label>
+        <div class="todo-data">
+            <label done-btn>✓<input type="checkbox"></label>
+            <input type="text">
+        </div>
+        <label add-btn>+<input type="radio"></label>
+        <div class="todo-data">
+            <label done-btn>✓<input type="checkbox"></label>
+            <input type="text">
+        </div>
+    </main>
+</body>
+
+</html>
