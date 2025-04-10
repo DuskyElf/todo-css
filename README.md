@@ -2,6 +2,8 @@
 
 This is a fully functional Todo app built with just HTML and CSS — JavaScript OUT THE WINDOW! While I wouldn't recommend this approach for your next production app (more on the limitations below), it's a fun way to explore how creative we can get with CSS and HTML elements. Plus, it shows off a pretty cool implementation of theme selection without needing any scripts!
 
+It's live on - https://duskyelf.github.io/todo-css/
+
 ## How It Works?
 
 ### State Management: HTML Form Controls
