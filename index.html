@@ -13,26 +13,6 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --text: #e7e4e9;
-            --background: #110c13;
-            --primary: #c1a4d2;
-            --secondary: #5f2e7a;
-            --accent: #9e4acd;
-
-            /* --text: #1a171c;
-            --background: #f1ecf3;
-            --primary: #4b2d5c;
-            --secondary: #b685d1;
-            --accent: #8431b4; */
-
-            /* --text: #090f15;
-            --background: #f2f6fa;
-            --primary: #4d81b4;
-            --secondary: #d295cc;
-            --accent: #c77a95; */
-        }
-
         html {
             display: flex;
             justify-content: center;
@@ -59,12 +39,17 @@
             justify-content: space-between;
         }
 
+        * {
+            transition: color 0.3s, background-color 0.3s;
+        }
+
         [theme-picker] {
-            &>span {
+            position: relative;
+
+            & span {
                 display: inline-block;
 
-                width: 1ch;
-                transition: 0.3s;
+                width: 20px;
                 aspect-ratio: 1 / 1;
                 border-radius: 50%;
             }
@@ -84,6 +69,104 @@
             & [prev-text] {
                 background-color: var(--text);
             }
+
+            & [theme-s] {
+                z-index: 1000;
+                display: none;
+                position: absolute;
+
+                padding: 10px;
+                border-radius: 5px;
+
+                background-color: var(--background);
+                box-shadow: var(--text) 0px 10px 20px -10px;
+
+                & label {
+                    padding: 5px;
+                    cursor: pointer;
+                    background-color: var(--background);
+
+                    gap: 5px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    opacity: 0.8;
+                    transition: opacity 0.3s;
+
+                    &:hover {
+                        opacity: 1;
+                    }
+                }
+
+                & label:nth-child(1) {
+                    --text: #e7e4e9;
+                    --background: #110c13;
+                    --primary: #c1a4d2;
+                    --secondary: #5f2e7a;
+                    --accent: #9e4acd;
+                }
+
+                & label:nth-child(2) {
+                    --text: #1a171c;
+                    --background: #f1ecf3;
+                    --primary: #4b2d5c;
+                    --secondary: #b685d1;
+                    --accent: #8431b4;
+                }
+
+                & label:nth-child(3) {
+                    --text: #e1dafb;
+                    --background: #030109;
+                    --primary: #987df2;
+                    --secondary: #8b0f99;
+                    --accent: #ea2ed1;
+                }
+
+                & label:nth-child(4) {
+                    --text: #0b0425;
+                    --background: #f8f6fe;
+                    --primary: #280d82;
+                    --secondary: #e266f0;
+                    --accent: #d115b8;
+                }
+            }
+
+            &:hover [theme-s] {
+                display: block;
+            }
+        }
+
+        :root:has([theme-s] label:nth-child(1)>input:checked) {
+            --text: #e7e4e9;
+            --background: #110c13;
+            --primary: #c1a4d2;
+            --secondary: #5f2e7a;
+            --accent: #9e4acd;
+        }
+
+        :root:has([theme-s] label:nth-child(2)>input:checked) {
+            --text: #1a171c;
+            --background: #f1ecf3;
+            --primary: #4b2d5c;
+            --secondary: #b685d1;
+            --accent: #8431b4;
+        }
+
+        :root:has([theme-s] label:nth-child(3)>input:checked) {
+            --text: #e1dafb;
+            --background: #030109;
+            --primary: #987df2;
+            --secondary: #8b0f99;
+            --accent: #ea2ed1;
+        }
+
+        :root:has([theme-s] label:nth-child(4)>input:checked) {
+            --text: #0b0425;
+            --background: #f8f6fe;
+            --primary: #280d82;
+            --secondary: #e266f0;
+            --accent: #d115b8;
         }
 
         /* hide the default radio indicator*/
@@ -125,7 +208,7 @@
                 position: absolute;
                 pointer-events: none;
 
-                transition: 0.3s;
+                transition: left 0.3s, width 0.3s;
 
                 display: inline-flex;
                 align-items: center;
@@ -163,7 +246,7 @@
                 color: var(--background);
                 background-color: var(--primary);
 
-                transition: 0.3s;
+                transition: opacity 0.3s, transform 0.3s;
 
                 &:hover {
                     opacity: 0.9;
@@ -233,7 +316,7 @@
                 opacity: 0.6;
                 border-left: 0.15em solid var(--accent);
 
-                transition: 0.3s;
+                transition: opacity 0.3s;
 
                 &:focus {
                     outline: none;
@@ -263,6 +346,36 @@
             <span prev-secondary></span>
             <span prev-accent></span>
             <span prev-text></span>
+            <div theme-s>
+                <label>
+                    <input type="radio" name="theme" checked="checked">
+                    <span prev-primary></span>
+                    <span prev-secondary></span>
+                    <span prev-accent></span>
+                    <span prev-text></span>
+                </label>
+                <label>
+                    <input type="radio" name="theme">
+                    <span prev-primary></span>
+                    <span prev-secondary></span>
+                    <span prev-accent></span>
+                    <span prev-text></span>
+                </label>
+                <label>
+                    <input type="radio" name="theme">
+                    <span prev-primary></span>
+                    <span prev-secondary></span>
+                    <span prev-accent></span>
+                    <span prev-text></span>
+                </label>
+                <label>
+                    <input type="radio" name="theme">
+                    <span prev-primary></span>
+                    <span prev-secondary></span>
+                    <span prev-accent></span>
+                    <span prev-text></span>
+                </label>
+            </div>
         </div>
     </h1>
     <nav>
